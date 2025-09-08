@@ -7,9 +7,11 @@ from .serializers import TaskSerializer
 from .models import Task, SyncLog
 from django.utils import timezone
 from loguru import logger
+from rest_framework.permissions import IsAuthenticated
 
 class TaskView(viewsets.ModelViewSet):
     serializer_class = TaskSerializer
+    permission_classes = [IsAuthenticated]
     
     def get_queryset(self):
         return Task.objects.filter()
