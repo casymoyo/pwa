@@ -1,5 +1,5 @@
 from django.shortcuts import render 
-from rest_framework.viewsets import  viewsets, status
+from rest_framework import  viewsets, status
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from django.utils import timesince
@@ -9,7 +9,7 @@ from django.utils import timezone
 from loguru import logger
 from rest_framework.permissions import IsAuthenticated
 
-class TaskView(viewsets.ModelViewSet):
+class TaskViewSet(viewsets.ModelViewSet):
     serializer_class = TaskSerializer
     permission_classes = [IsAuthenticated]
     
@@ -36,17 +36,18 @@ class TaskView(viewsets.ModelViewSet):
         #process client changes
         conflicts = []
         for item in client_data:
+            logger.info(item)
             try:
                 if item['operation'] == 'create':
                     task = Task.objects.create(
-                        id=item['id'],
-                        title=item['title'],
-                        description=item['description'],
-                        completed=item['completed'],
+                        id=item['data']['id'],
+                        title=item['data']['title'],
+                        description=item['data']['description'],
+                        completed=item['data']['completed'],
                         user=request.user
                     )
                     
-                    logger.succes(f'Task created: {task.id}')
+                    logger.success(f'Task created: {task.id}')
                     
                 elif item['operation'] == 'update':
                     task = Task.objects.get(id=item['id'], user=request.user)

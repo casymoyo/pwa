@@ -15,7 +15,7 @@ class SyncableModel(models.Model):
         
 
 class Task(SyncableModel):
-    title = models.CharField(max_length=200)
+    title = models.CharField(max_length=200, null=True)
     description = models.TextField()
     completed = models.BooleanField(default=False)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -24,7 +24,7 @@ class Task(SyncableModel):
 class SyncLog(models.Model):
     """Track sync operations"""
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    operation = models.CharField(max_length=20)  # 'create', 'update', 'delete'
+    operation = models.CharField(max_length=20) 
     model_name = models.CharField(max_length=50)
     object_id = models.UUIDField()
     timestamp = models.DateTimeField(auto_now_add=True)

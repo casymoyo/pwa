@@ -40,24 +40,24 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     
-    'corsheaders.middleware.CorsMiddleware',
-    'core.offline_middleware.OfflineMiddleware'
+    # 'corsheaders.middleware.CorsMiddleware',
+    # 'core.offline_middleware.OfflineMiddleware'
 ]
 
 
 # PWA Settings
-PWA_APP_NAME = 'Django Offline App'
-PWA_APP_DESCRIPTION = "Django application with offline capabilities"
-PWA_APP_THEME_COLOR = '#000000'
-PWA_APP_BACKGROUND_COLOR = '#ffffff'
+# PWA_APP_NAME = 'Django Offline App'
+# PWA_APP_DESCRIPTION = "Django application with offline capabilities"
+# PWA_APP_THEME_COLOR = '#000000'
+# PWA_APP_BACKGROUND_COLOR = '#ffffff'
 
-# Cache settings
-CACHES = {
-    'default': {
-        'BACKEND': 'redis_cache.RedisCache',
-        'LOCATION': 'redis://127.0.0.1:6379/',
-    }
-}
+# # Cache settings
+# CACHES = {
+#     'default': {
+#         'BACKEND': 'redis_cache.RedisCache',
+#         'LOCATION': 'redis://127.0.0.1:6379/',
+#     }
+# }
 
 # REST Framework settings
 REST_FRAMEWORK = {

@@ -1,10 +1,11 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Django Offline Tasks</title>
-    <link rel="manifest" href="{% url 'static' 'manifest.json' %}">
+    <link rel="manifest" href="{% static 'manifest.json' %}">
     <meta name="theme-color" content="#2196F3">
     <style>
         body {
@@ -268,8 +269,8 @@
             
             const task = {
                 id: generateUUID(),
-                title,
-                description,
+                title:title,
+                description:description,
                 completed: false,
                 created_at: new Date().toISOString(),
                 updated_at: new Date().toISOString()
