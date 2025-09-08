@@ -6,6 +6,7 @@ from django.utils import timesince
 from .serializers import TaskSerializer
 from .models import Task, SyncLog
 from django.utils import timezone
+from loguru import logger
 
 class TaskView(viewsets.ModelViewSet):
     serializer_class = TaskSerializer
@@ -42,6 +43,9 @@ class TaskView(viewsets.ModelViewSet):
                         completed=item['completed'],
                         user=request.user
                     )
+                    
+                    logger.succes(f'Task created: {task.id}')
+                    
                 elif item['operation'] == 'update':
                     task = Task.objects.get(id=item['id'], user=request.user)
                     # Check for conflicts
@@ -57,6 +61,8 @@ class TaskView(viewsets.ModelViewSet):
                     task.description = item['description']
                     task.completed = item['completed']
                     task.save()
+                    
+                    logger.info(f'Task updated: {task.id}')
                     
                 elif item['operation'] == 'delete':
                     Task.objects.filter(id=item['id'], user=request.user).delete()
@@ -79,6 +85,8 @@ class TaskView(viewsets.ModelViewSet):
                     success=False,
                     error_message=str(e)
                 )
+                logger.error(f'Error syncing: {e}')
+                
         return Response({
             'server_changes': TaskSerializer(server_changes, many=True).data,
             'conflicts': conflicts,
